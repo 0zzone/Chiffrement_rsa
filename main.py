@@ -1,7 +1,16 @@
 # Import
 from time import *
 
-# Formules mathématiques
+# Théorèmes mathématiques
+
+def premier(a):
+    """ Cette fonction permet de savoir si a est un nombre premier. """
+    valide = True
+    for i in range(2, a):
+        if a%i == 0:
+            valide = False
+    return valide
+
 def reste(a,b):
     """ Cette fonction permet de calculer le reste de a par b. """
     return a % b
@@ -10,7 +19,7 @@ def pgcd(a,b):
     """ Cette fonction permet de calculer PGCD(a,b). """
     a_arr = []
     b_arr = []
-    fin = []
+    phin = []
     for i in range(1,a):
         if a%i ==0:
             a_arr.append(i)
@@ -20,23 +29,23 @@ def pgcd(a,b):
     for c in a_arr:
         for l in b_arr:
             if c == l:
-                fin.append(c)
-    if fin == []:
+                phin.append(c)
+    if phin == []:
         return 1
     else:
-        return max(fin)
+        return max(phin)
 
-def inverse(e,fi):
-    """ Cette fonction permet de calculer un inverse de e modulo fi. """
+def inverse(e,phi):
+    """ Cette fonction permet de calculer un inverse de e modulo phi. """
     d = 1
-    while reste(d*e,fi) != 1:
+    while reste(d*e,phi) != 1:
         d+=1
     return d
 
-def det_e(fi):
-    """ Cette fonction permet de calculer un entier e tel que PGCD(e,fi) = 1. """
+def det_e(phi):
+    """ Cette fonction permet de calculer le plus petit entier e tel que PGCD(e,phi) = 1. """
     e = 5
-    while pgcd(e,fi) != 1:
+    while pgcd(e,phi) != 1:
         e += 1
     return e
 
@@ -44,10 +53,14 @@ def cle():
     """ Cette fonction permet de créer les éléments d'une clé publique et une clé privée. """
     p = int(input('Entrez un nombre premier: '))
     q = int(input('Entrez un autre nombre premier: '))
+    while premier(p) == False or premier(q) == False:
+        print('Un des deux nombre n\'étais pas un nombre premier, réessayez')
+        p = int(input('Entrez un nombre premier: '))
+        q = int(input('Entrez un autre nombre premier: '))
     n = p*q
-    fi = (p-1)*(q-1)
-    e = det_e(fi)
-    d = inverse(e,fi)
+    phi = (p-1)*(q-1)
+    e = det_e(phi)
+    d = inverse(e,phi)
     dic = {
         'public': {
             'n': n,
@@ -58,6 +71,7 @@ def cle():
         }
     }
     return dic
+
 
 def crypter():
     """ Cette fonction permet de crypter un message. """
@@ -72,8 +86,8 @@ def decrypter():
     x = int(input('Entrez l\'entier que vous voulez décrypter: '))
     d = int(input('Entrez la valeur d de votre clé privée: '))
     n = int(input('Entrez la valeur n de votre clé publique: '))
-    final = reste(x**d,n)
-    return 'Le message est: ' + str(final)
+    phinal = reste(x**d,n)
+    return 'Le message est: ' + str(phinal)
 
 # Menu
 def menu():
@@ -96,6 +110,4 @@ def menu():
     else:
         print('Erreur. Réessayez.')
         return menu()
-
 menu()
-    
