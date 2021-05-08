@@ -2,7 +2,6 @@
 from time import *
 
 # Théorèmes mathématiques
-
 def premier(a):
     """ Cette fonction permet de savoir si a est un nombre premier. """
     valide = True
