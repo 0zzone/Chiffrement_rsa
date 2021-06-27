@@ -15,10 +15,14 @@ void cle();
 void crypter();
 void decrypter();
 
-/* Main functions -------------------------------- */
+/* Main function -------------------------------- */
 
 int main(void){
-    cle();  
+    /* 
+        Écrire  -> cle() pour créer la clé publique et privée
+                -> crypter() pour crypter un message
+                -> decrypter() pour décrypter un message
+    */     
     return 0;
 }
 
@@ -100,6 +104,7 @@ int inverse(int e, int phi){
     int produit = d*e;
     while(reste(produit, phi) != 1){
         d++;
+        produit = d*e;
     }
     return d;
 }
@@ -153,14 +158,7 @@ void crypter(){
     printf("Valeur e de la clé publique: ");
     scanf("%d", &e);
 
-
-    int puissance = m;
-    for(int t=0; t<e-1; t++){
-        puissance = puissance * m;
-    }
-    int x = reste(puissance, n);
-
-    printf("Le message crypté est %d \n", x);
+    printf("Le message crypté est %d \n", (int)pow(m, e)%n);
 }
 
 void decrypter(){
@@ -176,10 +174,5 @@ void decrypter(){
     printf("Quelle est la valeur n de la clé publique ?");
     scanf("%d", &n);
 
-    int puissance = x;
-    for(int t=0; t<d-1; t++){
-        puissance = puissance * x;
-    }
-    int final = reste(puissance, n);
-    printf("Le message initial est %d", final);
+    printf("Le message initial est %d", (int)pow(x, d)%n);
 }
